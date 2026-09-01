@@ -1,0 +1,32 @@
+{
+  "name": "campuseats",
+  "version": "1.0.0",
+  "description": "This is campus eats",
+  "keywords": [
+    "react",
+    "capus",
+    "eats"
+  ],
+  "homepage": "https://github.com/Meghana77/campus-eats-ui#readme",
+  "bugs": {
+    "url": "https://github.com/Meghana77/campus-eats-ui/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Meghana77/campus-eats-ui.git"
+  },
+  "license": "ISC",
+  "author": "Meghana P",
+  "type": "commonjs",
+  "scripts": {
+    "start": "parcel index.html",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "parcel": "^2.16.4"
+  },
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  }
+}
