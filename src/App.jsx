@@ -1,9 +1,16 @@
-import Header from "./Components/Header"
+import Header from "./Components/Header";
+import Search from "./Components/Search";
+import RestaurantContainer from "./Components/RestaurantContainer";
+import Footer from "./Components/Footer";
+
 
 function App(){
     return (
         <div>
-            <Header></Header>
+            <Header />
+            <Search />
+            <RestaurantContainer />
+            <Footer />
         </div>
     );
 }
