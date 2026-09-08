@@ -1,4 +1,5 @@
 import RestaurantCard from "./RestaurantCard";
+import "./RestaurantContainer.css";
 
 function RestaurantContainer(){
 const restaurants = [
@@ -53,9 +54,9 @@ const restaurants = [
 ];
 
     return (
-        <div>
+        <div className="restaurant-container">
             {restaurants.map(function (restaurant){
-                return <RestaurantCard name={restaurant.name} rating={restaurant.rating} time={restaurant.deliveryTime} cuisine={restaurant.cuisine} />;
+                return <RestaurantCard name={restaurant.name} rating={restaurant.rating} time={restaurant.deliveryTime} cuisine={restaurant.cuisine} key={restaurant.id} image={restaurant.image} />;
             })
             }
         </div>

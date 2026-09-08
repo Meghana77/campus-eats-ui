@@ -1,9 +1,11 @@
+import "./Footer.css";
+
 function Footer(){
     return (
-    <footer>
+    <footer className="footer">
       <p>© 2026 CampusEats. All rights reserved.</p>
 
-      <div>
+      <div className="footer-links">
         <a href="#">About Us</a>
         <a href="#">Contact</a>
         <a href="#">Privacy Policy</a>

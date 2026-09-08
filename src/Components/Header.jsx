@@ -1,6 +1,8 @@
+import "./Header.css";
+
 function Header(){
     return (
-        <header>
+        <header className="header">
             <h1>Campus Eats</h1>
             <nav>
                 <a href="#">Home</a>

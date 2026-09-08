@@ -1,6 +1,8 @@
+import "./Search.css";
+
 function Search() {
   return (
-    <div>
+    <div className="search-container">
       <input
         type="text"
         placeholder="Search for restaurants..."
