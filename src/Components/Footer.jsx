@@ -1,10 +1,14 @@
 function Footer(){
     return (
-        <div>
-            <p>2026 CampusEats</p>
-            <p>Contact: campus@example.com</p>
-            <p>Hyderabad</p>
-        </div>
+    <footer>
+      <p>© 2026 CampusEats. All rights reserved.</p>
+
+      <div>
+        <a href="#">About Us</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+    </footer>
     );
 }
 
