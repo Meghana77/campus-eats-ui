@@ -1,7 +1,7 @@
 import RestaurantCard from "./RestaurantCard";
 import "./RestaurantContainer.css";
 
-function RestaurantContainer(){
+function RestaurantContainer({searchText}){
 const restaurants = [
   {
     id: 1,
@@ -53,9 +53,13 @@ const restaurants = [
   }
 ];
 
+const filteredRestaurants = restaurants.filter((restaurant) => 
+  restaurant.name.toLowerCase().includes(searchText.toLowerCase())
+)
+
     return (
         <div className="restaurant-container">
-            {restaurants.map(function (restaurant){
+            {filteredRestaurants.map(function (restaurant){
                 return <RestaurantCard name={restaurant.name} rating={restaurant.rating} time={restaurant.deliveryTime} cuisine={restaurant.cuisine} key={restaurant.id} image={restaurant.image} />;
             })
             }
