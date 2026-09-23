@@ -1,20 +1,22 @@
-import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./Pages/Home";
+import About from "./Pages/About";
+import Cart from "./Pages/Cart";
 import Header from "./Components/Header";
-import Search from "./Components/Search";
-import RestaurantContainer from "./Components/RestaurantContainer";
 import Footer from "./Components/Footer";
 
-
-function App(){
-    const [searchText, setSearchText] = useState("");
-    return (
-        <div>
-            <Header />
-            <Search setSearchText={setSearchText} />
-            <RestaurantContainer searchText={searchText} />
-            <Footer />
-        </div>
-    );
+function App() {
+  return (
+    <BrowserRouter>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/cart" element={<Cart />} />
+      </Routes>
+      <Footer />
+    </BrowserRouter>
+  );
 }
 
 export default App;
