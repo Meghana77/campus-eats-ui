@@ -1,6 +1,6 @@
+import { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
 import "./RestaurantContainer.css";
-import { useEffect, useState } from "react";
 
 function RestaurantContainer({ searchText }) {
   const [restaurants, setRestaurants] = useState([]);
@@ -56,6 +56,7 @@ function RestaurantContainer({ searchText }) {
             cuisine={restaurant.cuisine}
             key={restaurant.id}
             image={restaurant.image}
+            id={restaurant.id}
           />
         );
       })}
