@@ -10,14 +10,12 @@ function RestaurantContainer({ searchText }) {
   useEffect(() => {
     async function fetchRestaurants() {
       try {
-        const response = await fetch(
-          "https://wibest.in/data/json/restaurants.json",
-        );
+        const response = await fetch("http://localhost:5000/api/restaurants");
         if (!response.ok) {
           throw new Error("Failed to fetch restaurants");
         }
         const data = await response.json();
-        const restaurantsWithId = data.data.map((restaurant, index) => ({
+        const restaurantsWithId = data.map((restaurant, index) => ({
           ...restaurant,
           id: `${restaurant.city}-${restaurant.name}-${index}`,
         }));
