@@ -1,8 +1,10 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT;
 const restaurants = [
   {
     id: 1,
@@ -20,6 +22,16 @@ const restaurants = [
     cuisine: "North Indian",
   },
 ];
+
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log(process.env.MONGO_URI);
+    console.log("MongoDB connected");
+  })
+  .catch((error) => {
+    console.log("Mongo connection error:", error);
+  });
 
 app.use(
   cors({
