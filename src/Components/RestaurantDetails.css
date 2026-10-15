@@ -1,0 +1,126 @@
+.restaurant-details {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Restaurant information section */
+.restaurant-info {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-bottom: 35px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.restaurant-details-image {
+  width: 250px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+/* Menu heading */
+.restaurant-details h2 {
+  margin: 25px 0 20px;
+  color: #222;
+}
+
+/* Menu grid */
+.menu-container {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  align-items: stretch;
+}
+
+/* Menu cards only */
+.menu-container .restaurant-card {
+  width: 100%;
+  min-width: 0;
+  padding: 15px;
+  box-sizing: border-box;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+}
+
+.menu-container .restaurant-card:hover {
+  transform: translateY(-3px);
+}
+
+.menu-container .restaurant-card img {
+  display: block;
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.menu-container .restaurant-card h3 {
+  margin: 12px 0 8px;
+}
+
+.menu-container .restaurant-card p {
+  margin: 8px 0;
+}
+
+.menu-container .restaurant-card button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 6px;
+  background: #15803d;
+  color: white;
+  cursor: pointer;
+}
+
+.menu-container .restaurant-card button:hover {
+  background: #166534;
+}
+
+/* Loading and error messages */
+.status-message {
+  text-align: center;
+  margin: 40px;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .menu-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .restaurant-details {
+    padding: 12px;
+  }
+
+  .restaurant-info {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
+  }
+
+  .restaurant-details-image {
+    width: 100%;
+    height: 200px;
+  }
+
+  .menu-container {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+}

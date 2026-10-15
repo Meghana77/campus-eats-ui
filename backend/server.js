@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
+const Restaurant = require("./models/Restaurant");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -26,7 +27,6 @@ const restaurants = [
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    console.log(process.env.MONGO_URI);
     console.log("MongoDB connected");
   })
   .catch((error) => {
@@ -45,21 +45,27 @@ app.get("/", (req, res) => {
   res.send("CampusEats backend is running");
 });
 
-app.get("/api/restaurants", (req, res) => {
-  res.json(restaurants);
-});
-
-app.get("/api/restaurants/:id", (req, res) => {
-  const id = Number(req.params.id);
-  const restaurant = restaurants.find((restaurant) => restaurant.id === id);
-
-  if (!restaurant) {
-    return res.status(404).json({
-      message: "Restaurant data not found.",
+app.get("/api/restaurants", async (req, res) => {
+  try {
+    const restaurants = await Restaurant.find();
+    res.json(restaurants);
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to get restaurants.",
     });
   }
+});
 
-  res.json(restaurant);
+app.get("/api/restaurants/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const restaurant = await Restaurant.findById(id);
+    res.json(restaurant);
+  } catch (e) {
+    res.status(500).json({
+      message: "Failed to get restaurant",
+    });
+  }
 });
 
 app.post("/api/orders", (req, res) => {
@@ -75,6 +81,32 @@ app.post("/api/orders", (req, res) => {
     message: "Order is created successfully",
     order: orderDetails,
   });
+});
+
+app.post("/api/restaurants", async (req, res) => {
+  try {
+    const restaurant = await Restaurant.create(req.body);
+    res.status(201).json(restaurant);
+  } catch (e) {
+    res.status(500).json({
+      message: "Failed to create restaurant.",
+    });
+  }
+});
+
+app.put("/api/restaurants/:id", async (req, res) => {
+  try {
+    const restaurant = await Restaurant.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true },
+    );
+    res.json(restaurant);
+  } catch (e) {
+    res.status(500).json({
+      message: "Failed to create restaurant.",
+    });
+  }
 });
 
 app.listen(PORT, () => {

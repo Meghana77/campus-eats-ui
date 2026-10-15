@@ -15,12 +15,8 @@ function RestaurantContainer({ searchText }) {
           throw new Error("Failed to fetch restaurants");
         }
         const data = await response.json();
-        const restaurantsWithId = data.map((restaurant, index) => ({
-          ...restaurant,
-          id: `${restaurant.city}-${restaurant.name}-${index}`,
-        }));
 
-        setRestaurants(restaurantsWithId);
+        setRestaurants(data);
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -52,9 +48,9 @@ function RestaurantContainer({ searchText }) {
             rating={restaurant.rating}
             time={restaurant.deliveryTime}
             cuisine={restaurant.cuisine}
-            key={restaurant.id}
+            key={restaurant._id}
             image={restaurant.image}
-            id={restaurant.id}
+            id={restaurant._id}
           />
         );
       })}
