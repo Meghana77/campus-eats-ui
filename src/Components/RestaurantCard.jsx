@@ -1,7 +1,7 @@
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 import CartContext from "../Context/CartContext";
 import "./RestaurantCard.css";
-import { Link } from "react-router-dom";
 
 function RestaurantCard({
   image,
@@ -37,36 +37,33 @@ function RestaurantCard({
     }
   };
 
-  const cardContent = (
-    <div className="restaurant-card">
-      <img src={image} alt={name} />
+  if (type === "menu") {
+    return (
+      <div className="restaurant-card menu-card">
+        <img src={image} alt={name} />
+        <h3>{name}</h3>
+        <p>₹{price}</p>
+        <button onClick={handleAddToCart} type="button">
+          Add to Cart
+        </button>
+      </div>
+    );
+  }
 
-      <h3>{name}</h3>
-
-      {type === "restaurant" ? (
-        <>
-          <p>⭐ {rating}</p>
-          <p>{time}</p>
-          <p>{cuisine}</p>
-        </>
-      ) : (
-        <>
-          <p>₹{price}</p>
-
-          <button onClick={handleAddToCart} type="button">
-            Add to Cart
-          </button>
-        </>
-      )}
+  return (
+    <div className="restaurant-card restaurant-item">
+      <Link
+        to={`/restaurant/${id}`}
+        className="restaurant-link"
+        aria-label={`View ${name} menu`}
+      >
+        <img src={image} alt={name} />
+        <h3>{name}</h3>
+        <p>⭐ {rating}</p>
+        <p>{time}</p>
+        <p>{cuisine}</p>
+      </Link>
     </div>
-  );
-
-  return type === "restaurant" ? (
-    <Link to={`/restaurant/${id}`} className="restaurant-link">
-      {cardContent}
-    </Link>
-  ) : (
-    cardContent
   );
 }
 

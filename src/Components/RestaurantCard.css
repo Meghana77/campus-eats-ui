@@ -1,14 +1,22 @@
 .restaurant-card {
-  width: 250px;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow: hidden;
   padding: 16px;
-  border: 1px solid #eee;
+  border: 1px solid #e5e7eb;
   border-radius: 12px;
   background-color: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
-  box-sizing: border-box;
+}
+
+.restaurant-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
 
 .restaurant-card img {
@@ -31,12 +39,12 @@
   color: #666;
 }
 
-.restaurant-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+.restaurant-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
 }
 
-/* Add to Cart button */
 .restaurant-card button {
   width: 100%;
   margin-top: 12px;
@@ -55,18 +63,7 @@
   background-color: #166534;
 }
 
-/* Restaurant navigation link */
-.restaurant-link {
-  display: block;
-  color: inherit;
-  text-decoration: none;
-}
-
 @media (max-width: 600px) {
-  .restaurant-card {
-    width: 100%;
-  }
-
   .restaurant-card img {
     height: 160px;
   }
