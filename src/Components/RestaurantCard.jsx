@@ -14,6 +14,7 @@ function RestaurantCard({
   price,
 }) {
   const { cart, setCart } = useContext(CartContext);
+  const quantity = cart.find((item) => item.name === name)?.quantity || 0;
 
   const handleAddToCart = () => {
     const existingItem = cart.find((item) => item.name === name);
@@ -25,15 +26,19 @@ function RestaurantCard({
         ),
       );
     } else {
-      setCart([
-        ...cart,
-        {
-          name,
-          image,
-          price,
-          quantity: 1,
-        },
-      ]);
+      setCart([...cart, { name, image, price, quantity: 1 }]);
+    }
+  };
+
+  const handleDecrease = () => {
+    if (quantity === 1) {
+      setCart(cart.filter((item) => item.name !== name));
+    } else {
+      setCart(
+        cart.map((item) =>
+          item.name === name ? { ...item, quantity: item.quantity - 1 } : item,
+        ),
+      );
     }
   };
 
@@ -43,9 +48,23 @@ function RestaurantCard({
         <img src={image} alt={name} />
         <h3>{name}</h3>
         <p>₹{price}</p>
-        <button onClick={handleAddToCart} type="button">
-          Add to Cart
-        </button>
+        {quantity === 0 ? (
+          <button onClick={handleAddToCart} type="button">
+            Add to Cart
+          </button>
+        ) : (
+          <div className="quantity-control">
+            <button onClick={handleDecrease} type="button">
+              −
+            </button>
+
+            <span>{quantity}</span>
+
+            <button onClick={handleAddToCart} type="button">
+              +
+            </button>
+          </div>
+        )}
       </div>
     );
   }

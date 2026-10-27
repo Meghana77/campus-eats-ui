@@ -68,3 +68,30 @@
     height: 160px;
   }
 }
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 4px 10px;
+  border: 1px solid #198754;
+  border-radius: 6px;
+  width: fit-content;
+  margin: 10px auto;
+}
+
+.quantity-control button {
+  background: none;
+  border: none;
+  color: #198754;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.quantity-control span {
+  font-weight: bold;
+  min-width: 18px;
+  text-align: center;
+}
