@@ -13,54 +13,66 @@ function RestaurantCard({
   type = "restaurant",
   price,
 }) {
-  const { cart, setCart } = useContext(CartContext);
+  const { cart, dispatch } = useContext(CartContext);
+
   const quantity = cart.find((item) => item.name === name)?.quantity || 0;
 
   const handleAddToCart = () => {
-    const existingItem = cart.find((item) => item.name === name);
+    dispatch({
+      type: "ADD_ITEM",
+      payload: {
+        name,
+        image,
+        price,
+      },
+    });
+  };
 
-    if (existingItem) {
-      setCart(
-        cart.map((item) =>
-          item.name === name ? { ...item, quantity: item.quantity + 1 } : item,
-        ),
-      );
-    } else {
-      setCart([...cart, { name, image, price, quantity: 1 }]);
-    }
+  const handleIncrease = () => {
+    dispatch({
+      type: "INCREASE_QUANTITY",
+      payload: name,
+    });
   };
 
   const handleDecrease = () => {
-    if (quantity === 1) {
-      setCart(cart.filter((item) => item.name !== name));
-    } else {
-      setCart(
-        cart.map((item) =>
-          item.name === name ? { ...item, quantity: item.quantity - 1 } : item,
-        ),
-      );
-    }
+    dispatch({
+      type: "DECREASE_QUANTITY",
+      payload: name,
+    });
   };
 
+  // Display a menu item
   if (type === "menu") {
     return (
       <div className="restaurant-card menu-card">
         <img src={image} alt={name} />
+
         <h3>{name}</h3>
+
         <p>₹{price}</p>
+
         {quantity === 0 ? (
           <button onClick={handleAddToCart} type="button">
             Add to Cart
           </button>
         ) : (
           <div className="quantity-control">
-            <button onClick={handleDecrease} type="button">
+            <button
+              onClick={handleDecrease}
+              type="button"
+              aria-label={`Decrease ${name} quantity`}
+            >
               −
             </button>
 
             <span>{quantity}</span>
 
-            <button onClick={handleAddToCart} type="button">
+            <button
+              onClick={handleIncrease}
+              type="button"
+              aria-label={`Increase ${name} quantity`}
+            >
               +
             </button>
           </div>
@@ -69,6 +81,7 @@ function RestaurantCard({
     );
   }
 
+  // Display a restaurant
   return (
     <div className="restaurant-card restaurant-item">
       <Link
@@ -77,10 +90,14 @@ function RestaurantCard({
         aria-label={`View ${name} menu`}
       >
         <img src={image} alt={name} />
+
         <h3>{name}</h3>
+
         <p>⭐ {rating}</p>
+
         <p>{time}</p>
-        <p>{cuisine}</p>
+
+        <p>{Array.isArray(cuisine) ? cuisine.join(", ") : cuisine}</p>
       </Link>
     </div>
   );

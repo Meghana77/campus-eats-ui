@@ -3,38 +3,39 @@ import CartContext from "../Context/CartContext";
 import "./Cart.css";
 
 function Cart() {
-  const { cart, setCart } = useContext(CartContext);
+  const { cart, dispatch } = useContext(CartContext);
 
   const [customerName, setCustomerName] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [placedOrder, setPlacedOrder] = useState(null);
 
+  // Increase item quantity
   const increaseQuantity = (name) => {
-    setCart((currentCart) =>
-      currentCart.map((item) =>
-        item.name === name ? { ...item, quantity: item.quantity + 1 } : item,
-      ),
-    );
+    dispatch({
+      type: "INCREASE_QUANTITY",
+      payload: name,
+    });
   };
 
+  // Decrease item quantity
   const decreaseQuantity = (name) => {
-    setCart((currentCart) =>
-      currentCart
-        .map((item) =>
-          item.name === name ? { ...item, quantity: item.quantity - 1 } : item,
-        )
-        .filter((item) => item.quantity > 0),
-    );
+    dispatch({
+      type: "DECREASE_QUANTITY",
+      payload: name,
+    });
   };
 
+  // Calculate total cart amount
   const totalAmount = cart.reduce(
-    (total, item) => total + item.price * item.quantity,
+    (total, item) => total + Number(item.price) * item.quantity,
     0,
   );
 
+  // Place order
   const handlePlaceOrder = async (event) => {
     event.preventDefault();
+
     setError("");
 
     if (cart.length === 0) {
@@ -57,6 +58,7 @@ function Cart() {
         },
         body: JSON.stringify({
           customerName: customerName.trim(),
+
           items: cart.map((item) => ({
             name: item.name,
             image: item.image,
@@ -72,8 +74,18 @@ function Cart() {
         throw new Error(data.message || "Unable to place your order.");
       }
 
+      if (!data.order) {
+        throw new Error("Order response is missing order details.");
+      }
+
+      // Save the order response for the confirmation screen
       setPlacedOrder(data.order);
-      setCart([]);
+
+      // Clear the cart after successful order placement
+      dispatch({
+        type: "CLEAR_CART",
+      });
+
       setCustomerName("");
     } catch (error) {
       setError(
@@ -84,33 +96,41 @@ function Cart() {
     }
   };
 
-  //after order is placed
+  // Display order confirmation
   if (placedOrder) {
     return (
       <div className="cart order-success">
         <h1>Order placed successfully!</h1>
+
         <p>Thank you, {placedOrder.customerName}.</p>
+
         <p>
           Order ID: <strong>{placedOrder._id}</strong>
         </p>
+
         <p>Status: {placedOrder.status}</p>
+
         <p>Total amount: ₹{Number(placedOrder.totalAmount).toFixed(2)}</p>
+
         <p>You can save your order ID for future reference.</p>
       </div>
     );
   }
 
-  //If cart is empty
+  // Display an empty cart
   if (cart.length === 0) {
     return (
       <div className="cart">
         <h1>Your Cart</h1>
+
         <p>Your cart is empty. Add some delicious food!</p>
+
         {error && <p role="alert">{error}</p>}
       </div>
     );
   }
 
+  // Display cart items and checkout form
   return (
     <div className="cart">
       <h1>Your Cart</h1>
@@ -120,6 +140,7 @@ function Cart() {
           {item.image && <img src={item.image} alt={item.name} width="120" />}
 
           <h2>{item.name}</h2>
+
           <p>Price: ₹{item.price}</p>
 
           <div>
@@ -142,7 +163,7 @@ function Cart() {
             </button>
           </div>
 
-          <p>Subtotal: ₹{(item.price * item.quantity).toFixed(2)}</p>
+          <p>Subtotal: ₹{(Number(item.price) * item.quantity).toFixed(2)}</p>
         </div>
       ))}
 
@@ -151,6 +172,7 @@ function Cart() {
       <form className="checkout-card" onSubmit={handlePlaceOrder}>
         <div className="checkout-heading">
           <h2>Complete Your Order</h2>
+
           <p>Just one more step to enjoy your meal!</p>
         </div>
 
@@ -163,7 +185,7 @@ function Cart() {
             type="text"
             placeholder="Enter your full name"
             value={customerName}
-            onChange={(e) => setCustomerName(e.target.value)}
+            onChange={(event) => setCustomerName(event.target.value)}
             minLength={2}
             required
             disabled={submitting}
@@ -180,6 +202,7 @@ function Cart() {
 
         <div className="checkout-total">
           <span>Total to pay</span>
+
           <strong>₹{totalAmount.toFixed(2)}</strong>
         </div>
 
